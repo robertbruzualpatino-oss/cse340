@@ -3,9 +3,16 @@
     <h1><%= title %></h1>
     <p>Here are a few of our partner organizations:</p>
     <ul>
-        <li><img src="/images/brightfuture-logo.png" alt="BrightFuture Builders logo"><strong>: info@brightfuture.org</strong></li>
-        <li><img src="/images/greenharvest-logo.png" alt="GreenHarvest Growers logo"><strong>: contact@greenharvest.org</strong></li>
-        <li><img src="/images/unityserve-logo.png" alt="UnityServe Volunteers logo"><strong>: hello@unityserve.org</strong></li>
+        <% if (organizations && organizations.length > 0) { %>
+            <% organizations.forEach(org => { %>
+                <li>
+                    <img src="/images/<%= org.logo_filename || 'default-logo.png' %>" alt="<%= org.name %> logo">
+                    <strong><%= org.name %>:</strong> <%= org.contact_email %>
+                </li>
+            <% }) %>
+        <% } else { %>
+             <p>No partner organizations available at this time.</p>
+        <% } %>
     </ul>
 </main>
 <%- include('partials/footer') %>

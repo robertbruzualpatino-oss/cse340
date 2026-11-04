@@ -1,16 +1,19 @@
 {
   "cSpell.words": [
+    "brightfuture",
     "dotenv",
     "eslintcache",
+    "greenharvest",
     "jscoverage",
     "jspm",
     "Nuxt",
     "pids",
     "stylelintcache",
     "Sveltekit",
+    "unityserve",
     "Vite",
     "vitepress",
     "vuepress",
     "wscript"
-]
+  ]
 }
