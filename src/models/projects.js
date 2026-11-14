@@ -25,7 +25,7 @@ const getAllProjects = async () => {
 const getProjectsByOrganizationId = async (organizationId) => {
     const query = `
     SELECT
-        project_id,
+        id AS project_id,
         organization_id,
         title,
         description,
