@@ -1,6 +1,6 @@
 import db from './db.js';
 
-export async function getAllProjects() {
+const getAllProjects = async () => {
     try {
         const query = `
             SELECT
@@ -20,4 +20,26 @@ export async function getAllProjects() {
         console.error('Error getting projects from database:', error);
         throw error;
     }
-}
+};
+
+const getProjectsByOrganizationId = async (organizationId) => {
+    const query = `
+    SELECT
+        project_id,
+        organization_id,
+        title,
+        description,
+        location,
+        date
+    FROM project
+    WHERE organization_id = $1
+    ORDER BY date;
+    `;
+
+    const queryParams = [organizationId];
+    const result = await db.query(query, queryParams);
+
+    return result.rows;
+};
+
+export { getAllProjects, getProjectsByOrganizationId };
