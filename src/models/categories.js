@@ -1,5 +1,15 @@
 import db from './db.js';
 
+const getAllCategories = async () => {
+    const query = `
+        SELECT id AS category_id, name, description
+        FROM categories
+        ORDER BY name ASC;
+    `;
+    const result = await db.query(query);
+    return result.rows;
+};
+
 const getCategoryDetails = async (id) => {
     const query = `
         SELECT id AS category_id, name, description
@@ -39,4 +49,4 @@ const getProjectsByCategoryId = async (categoryId) => {
     return result.rows;
 };
  
-export { getCategoryDetails, getCategoriesByProjectId, getProjectsByCategoryId };
+export { getAllCategories, getCategoryDetails, getCategoriesByProjectId, getProjectsByCategoryId };
