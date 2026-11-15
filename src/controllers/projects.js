@@ -1,4 +1,4 @@
-import { getAllProjects } from "../models/projects.js";
+import { getAllProjects, getProjectsDetails } from "../models/projects.js";
 
 const showProjectsPage = async (req, res) => {
     const projects = await getAllProjects();
@@ -6,4 +6,15 @@ const showProjectsPage = async (req, res) => {
     res.render('projects', { title, projects });
 };
 
-export { showProjectsPage };
+const showProjectDetails = async (req, res) => {
+    const projectId = req.params.id;
+    const project = await getProjectsDetails(projectId);
+
+    if (!project) {
+        return res.status(404).render('errors/404', { title: 'Page Not Found' });
+    }
+
+    res.render('project', { title: project.title, project });
+};
+
+export { showProjectsPage, showProjectDetails };

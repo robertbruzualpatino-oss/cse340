@@ -1,0 +1,21 @@
+<%- include('partials/') %>
+
+<main class="container">
+    <section class="project-details">
+        <h1><%= project.title %></h1>
+
+        <p class="project-description">
+            <strong>Description:</strong> <%= project.description %>
+        </p>
+
+        <p class="project-location">
+            <strong>Location:</strong> <%= project.location %>
+        </p>
+
+        <p class="project-date">
+            <strong>Date:</strong> <%= project.date %>
+        </p>
+    </section>
+</main>
+
+<%- include('partials/footer') %>
