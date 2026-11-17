@@ -2,7 +2,7 @@ import db from './db.js';
 
 const getAllCategories = async () => {
     const query = `
-        SELECT id AS category_id, name, description
+        SELECT category_id, name, description
         FROM categories
         ORDER BY name ASC;
     `;
@@ -12,9 +12,9 @@ const getAllCategories = async () => {
 
 const getCategoryDetails = async (id) => {
     const query = `
-        SELECT id AS category_id, name, description
+        SELECT category_id, name, description
         FROM categories
-        WHERE id = $1;
+        WHERE category_id = $1;
     `;
     const result = await db.query(query, [id]);
     return result.rows.length > 0 ? result.rows[0] : null;
@@ -22,9 +22,9 @@ const getCategoryDetails = async (id) => {
 
 const getCategoriesByProjectId = async (projectId) => {
     const query = `
-        SELECT c.id AS category_id, c.name, c.description
+        SELECT c.category_id, c.name, c.description
         FROM categories c
-        JOIN project_categories pc ON c.id = pc.category_id
+        JOIN project_categories pc ON c.category_id = pc.category_id
         WHERE pc.project_id = $1;
     `;
     const result = await db.query(query, [projectId]);
