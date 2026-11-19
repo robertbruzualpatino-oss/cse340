@@ -2,6 +2,10 @@
 <main>
     <h1><%= title %></h1>
 
+    <% if (typeof error !== 'undefined' && error) { %>
+        <p class="form-error"><%= error %></p>
+    <% } %>
+
     <form action="/new-organization" method="POST">
         <div class="form-group">
             <label for="name">Organization Name</label>
@@ -9,6 +13,10 @@
                 type="text"
                 id="name"
                 name="name"
+                value="<%= typeof formData !== 'undefined' && formData.name ? formData.name : '' %>"
+                required
+                minlength="2"
+                maxlength="150"
             />
         </div>
 
@@ -17,15 +25,21 @@
             <textarea 
                 id="description"
                 name="description"
-            ></textarea>
+                required
+                minlength="5"
+                maxlength="1000"
+            ><%= typeof formData !== 'undefined' && formData.description ? formData.description : '' %></textarea>
         </div>
 
         <div class="form-group">
             <label for="contactEmail">Contact Email</label>
             <input 
-                type="text"
+                type="email"
                 id="contactEmail"
                 name="contactEmail"
+                value="<%= typeof formData !== 'undefined' && formData.contactEmail ? formData.contactEmail : '' %>"
+                required
+                maxlength="255"
             />
         </div>
 
