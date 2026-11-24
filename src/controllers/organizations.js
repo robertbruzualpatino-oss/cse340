@@ -1,7 +1,6 @@
 import { getAllOrganizations, getOrganizationDetails, createOrganization } from "../models/organizations.js";
 import { getProjectsByOrganizationId } from "../models/projects.js";
-
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+import { body, validationResult } from 'express-validator';
 
 const showOrganizationsPage = async (req, res) => {
     const organizations = await getAllOrganizations();
@@ -25,36 +24,42 @@ const showNewOrganizationForm = async (req, res) => {
 };
 
 const processNewOrganizationForm = async (req, res) => {
-    const name = req.body.name?.trim() || '';
-    const description = req.body.description?.trim() || '';
-    const contactEmail = req.body.contactEmail?.trim() || '';
-    const formData = { name, description, contactEmail };
-
-    let validationError = null;
-
-    if (!name || name.length < 2 || name.length > 150) {
-        validationError = 'Organization name must be between 2 and 150 characters.';
-    } else if (!description || description.length < 5 || description.length > 1000) {
-        validationError = 'Description must be between 5 and 1000 characters.';
-    } else if (!contactEmail || !emailRegex.test(contactEmail) || contactEmail.length > 255) {
-        validationError = 'Please provide a valid contact email address.';
-    }
-
-    if (validationError) {
-        return res.status(400).render('new-organization', {
-            title: 'Add New Organization',
-            error: validationError,
-            formData
+    const results = validationResult(req);
+    if (!results.isEmpty()) {
+        results.array().forEach((error) => {
+            req.flash('error', error.msg);
         });
+
+        return res.redirect('/new-organization');
     }
 
+    const { name, description, contactEmail } = req.body;
     const logoFilename = 'placeholder-logo.png';
 
     const organizationId = await createOrganization(name, description, contactEmail, logoFilename);
-
     req.flash('success', 'Organization added successfully!');
-    
     res.redirect(`/organization/${organizationId}`);
 };
 
-export { showOrganizationsPage, showOrganizationDetailsPage, showNewOrganizationForm, processNewOrganizationForm };
+const organizationValidation = [
+    body('name')
+        .trim()
+        .notEmpty()
+        .withMessage('Organization name is required')
+        .isLength({ min: 3, max: 150 })
+        .withMessage('Organization name must be between 3 and 150 characters'),
+    body('description')
+        .trim()
+        .notEmpty()
+        .withMessage('Organization description is required')
+        .isLength({ max: 500 })
+        .withMessage('Organization description cannot exceed 500 characters'),
+    body('contactEmail')
+        .normalizeEmail()
+        .notEmpty()
+        .withMessage('Contact email is required')
+        .isEmail()
+        .withMessage('Please provide a valid email address')
+];
+
+export { showOrganizationsPage, showOrganizationDetailsPage, showNewOrganizationForm, processNewOrganizationForm, organizationValidation };
