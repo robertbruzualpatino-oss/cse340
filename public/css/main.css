@@ -78,6 +78,48 @@ nav a:focus {
     outline: none;
 }
 
+.alert {
+    max-width: 1000px;
+    width: 90%;
+    margin: 1.5rem auto -1rem;
+    padding: 15px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+}
+
+.alert p {
+    margin: 0;
+    font-weight: 600;
+}
+
+.alert p + p {
+    margin-top: 0.4rem;
+}
+
+.alert.success {
+    color: #155724;
+    background-color: #d43dda;
+    border-color: #c3e6cb;
+}
+
+.alert.error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.alert.warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+
+.alert.info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
 main {
     flex: 1;
     max-width: 1000px;

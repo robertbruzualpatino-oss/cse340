@@ -1,10 +1,13 @@
 import express from 'express';
+import session from 'express-session';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import db, { testConnection } from './src/models/db.js';
 import router from './src/routes.js';
+import flash from './src/middleware/flash.js';
 
 const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
+const SESSION_SECRET = process.env.SESSION_SECRET;
 
 const PORT = process.env.PORT || 3000;
 
@@ -17,6 +20,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({
+    secret: SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 60 * 60 * 1000 }
+}));
+
+app.use(flash);
 
 app.set('view engine', 'ejs');
 
