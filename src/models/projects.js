@@ -110,8 +110,8 @@ const updateProject = async (projectId, title, description, location, date, orga
             location = $3,
             event_date = $4,
             organization_id = $5
-        WHERE id = $6
-        RETURNING id;    
+        WHERE project_id = $6
+        RETURNING project_id;    
     `;
     
     const queryParams = [title, description, location, date, organizationId, projectId];
@@ -125,7 +125,7 @@ const updateProject = async (projectId, title, description, location, date, orga
         console.log('Updated project with ID:', projectId);
     }
 
-    return result.rows[0].id;
+    return result.rows[0].project_id;
 };
 
 export {
