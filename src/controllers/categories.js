@@ -5,7 +5,7 @@ import {
     getProjectsByCategoryId,
     updateCategoryAssignments
 } from "../models/categories.js";
-import { getProjectDetails } from "../models/projects.js";
+import { getProjectsDetails } from "../models/projects.js";
 
 const showCategoriesPage = async (req, res) => {
     const categories = await getAllCategories();
@@ -27,7 +27,7 @@ const showCategoryDetailsPage = async (req, res) => {
 const showAssignCategoriesForm = async (req, res) => {
     const projectId = req.params.projectId;
 
-    const projectDetails = await getProjectDetails(projectId);
+    const projectDetails = await getProjectsDetails(projectId);
     const categories = await getAllCategories();
     const assignedCategories = await getCategoriesByProjectId(projectId);
 
