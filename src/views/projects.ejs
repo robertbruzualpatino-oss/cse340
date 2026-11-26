@@ -2,6 +2,8 @@
 
 <main>
     <h1><%= title %></h1>
+    <p><a href="/new-project">Add New Service Project</a></p>
+
     <h2>Upcoming Service Projects</h2>
 
     <% if (projects && projects.length > 0) { %>
@@ -9,7 +11,7 @@
             <% projects.forEach(project => { %>
                 <%
                     // Format the event date cleanly
-                    const formattedDate = new Date(project.event_date).toLocaleDateString('en-US', {
+                    const formattedDate = new Date(project.date).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric',
