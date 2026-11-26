@@ -1,5 +1,5 @@
 import { body, validationResult } from "express-validator";
-import { getUpcomingProjects, getProjectsDetails, createProject } from "../models/projects.js";
+import { getUpcomingProjects, getProjectsDetails, createProject, updateProject } from "../models/projects.js";
 import { getCategoriesByProjectId } from "../models/categories.js";
 import { getAllOrganizations } from "../models/organizations.js";
 
